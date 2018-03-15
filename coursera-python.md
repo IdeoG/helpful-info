@@ -134,13 +134,85 @@ class Property:
     def __get__(self, obj, obj_type=None):
         if obj is None:
             return self
-
         return self.getter(obj)
 ```
 
 - Позволяют переопределять поведение атрибутов при обращении к ним внутри классов
 
----
+## Наследование
+
+``` python
+class PrintThread(Thread):
+    def __init__(self, name):
+        super().__init__()
+        self.name = name
+
+    def run(self):
+        print("hello " + self.name)
+
+# In  [ ]: PrintThread("Mike").start()
+# Out [ ]: hello Mike
+```
+
+## Очереди
+
+``` python
+from queue import Queue
+from threading import Thread
+
+
+def worker(q, n):
+    while True:
+        item = q.get()
+        if item is None:
+            break
+        print("process data:", n, item)
+
+q = Queue(5)
+th1 = Thread(target=worker, args=(q, 1))
+th2 = Thread(target=worker, args=(q, 2))
+
+th1.start(); th2.start()
+
+for i in range(50):
+    q.put(i)
+
+q.put(None); q.put(None)
+th1.join(); th2.join()
+```
+
+## Создание сокета
+
+- Серверная часть
+
+``` python
+import socket
+
+
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+    sock.bind(("127.0.0.1", 10001))
+    sock.listen(socket.SOMAXCONN)
+
+    while True:
+        conn, addr = sock.accept()
+        with conn:
+            while True:
+                data = conn.recv(1024)
+                if not data:
+                    break
+                print(data.decode("utf-8"))
+```
+
+- Клиентская часть
+
+``` python
+import socket
+
+
+with socket.create_connection(("127.0.0.1", 10001)) as sock:
+    sock.sendall(b"ping")
+```
+
 ---
 
 ## Непонятые темы
