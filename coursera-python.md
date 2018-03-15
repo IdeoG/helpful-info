@@ -11,7 +11,7 @@ def logger(filename):
                 f.write(result)
             return result
 
-@logger("new_log.txt"):
+@logger("new_log.txt")
 def summator(num_list):
     return sum(num_list)
 
@@ -20,9 +20,8 @@ def summator(num_list):
 # Также число 15 было записано в файл new_log.txt
 ```
 
----
-
 ## Генераторы
+
 ``` python
 def accumulator():
     total = 0
@@ -58,9 +57,6 @@ generator = accumulator()
 
 - Хранит только текущее положение
 
-
----
-
 ## Magic method
 
 Это методы, которые начинаются и заканчиваются двумя подчеркиваниями "__"
@@ -71,7 +67,6 @@ generator = accumulator()
 - call - метод, вызываемый при каждом вызове объекта
 - add - перегрузка оператора "+"
 
----
 
 ## Контекстные менеджеры
 
@@ -100,8 +95,6 @@ with timer() as t:
 ```
 
 - Автоматическое открытие и закрытие сокета
-
----
 
 ## Дескрипторы
 
