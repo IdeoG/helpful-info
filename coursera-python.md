@@ -10,6 +10,8 @@ def logger(filename):
             with open(filename, 'a') as f:
                 f.write(result)
             return result
+        return wrapped
+    return decorator
 
 @logger("new_log.txt")
 def summator(num_list):
